@@ -1,0 +1,836 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+@font-face {
+  font-family: 'Clash Display';
+  src: url('./fonts/ClashDisplay-Variable.ttf') format('woff2'),
+       url('./fonts/ClashDisplay-Variable.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Sirin Stencil';
+  src: url('./fonts/SirinStencil-Regular.ttf') format('woff'),
+       url('./fonts/SirinStencil-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  font-family: 'Clash Display', 'Sirin Stencil', sans-serif;
+}
+
+body {
+    margin: 0;
+    background: #fff;
+}
+
+
+
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(#eee 1px, transparent 1px), linear-gradient(90deg, #eee 1px, transparent 1px);
+    background-size: 70px 70px; /* Adjust the size of the grid */
+    z-index: -1;
+}
+
+/* Loading animation styles */
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.98);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  font-size: 28px;
+  font-weight: bold;
+  color: #3b75ef;
+  animation: slideUp 1.4s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  animation-delay: 2.2s;
+}
+
+.loading-spinner::after {
+  content: '';
+  width: 240px;
+  height: 6px;
+  background: linear-gradient(90deg, rgba(59, 117, 239, 0.1), rgba(59, 117, 239, 0.2));
+  border-radius: 3px;
+  margin-top: 20px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(59, 117, 239, 0.1);
+}
+
+.loading-spinner::before {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 6px;
+  background: linear-gradient(90deg, #3b75ef, #2c5bd9);
+  border-radius: 3px;
+  bottom: calc(50% - 23px);
+  left: calc(50% - 120px);
+  animation: progressBar 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  z-index: 1001;
+  box-shadow: 0 0 15px rgba(59, 117, 239, 0.4);
+}
+
+/* Loading text animation */
+.loading-spinner span {
+  display: inline-block;
+  animation: pulseText 1.5s ease-in-out infinite;
+}
+
+@keyframes progressBar {
+  0% { 
+    width: 0;
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% { 
+    width: 240px;
+    opacity: 0.9;
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.9;
+    transform: translateY(-10%);
+  }
+  100% {
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes pulseText {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(0.98);
+  }
+}
+
+
+* {
+  cursor: none !important;
+}
+
+a, button, [role="button"] {
+  cursor: none;
+}
+.company-name {
+    position: absolute;
+    top: 40px;
+    left: 50px;
+    font-size: 30px;
+    color: #000;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    text-decoration: none;
+}
+
+.company-name:hover {
+    color: #007bff;
+    transform: translateY(-2px);
+    text-shadow: 0 2px 10px rgba(0, 123, 255, 0.2);
+}
+
+.year-name {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 30px;
+    color: #000;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    text-decoration: none;
+}
+
+.year-name:hover {
+    color: #007bff;
+    transform: translate(-50%, -2px);
+    text-shadow: 0 2px 10px rgba(0, 123, 255, 0.2);
+}
+
+.sign-in-button {
+    position: absolute;
+    top: 30px;
+    left: 1380px;
+    font-size: 30px;
+    color: #000;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 998;
+    padding: 10px;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 1;
+    text-decoration: none;
+    overflow: hidden;
+}
+
+.sign-in-button:hover {
+    color: #007bff;
+    transform: translateY(-3px) scale(1.05);
+    text-shadow: 0 0 15px rgba(0, 123, 255, 0.4);
+}
+
+.sign-in-button::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #007bff;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.4);
+}
+
+.sign-in-button:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+    box-shadow: 0 0 12px rgba(0, 123, 255, 0.8);
+}
+
+.menu-button {
+    position: absolute;
+    top: 31px;
+    right: 50px;
+    font-size: 30px;
+    color: #000;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 998;
+    padding: 10px;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 1;
+    overflow: hidden;
+    letter-spacing: 1px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.menu-button:hover {
+    color: #007bff;
+    transform: translateY(-3px) scale(1.05);
+    text-shadow: 0 0 15px rgba(0, 123, 255, 0.4);
+}
+
+.menu-button::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #007bff;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.menu-button:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+    box-shadow: 0 0 12px rgba(0, 123, 255, 0.8);
+}
+
+.menu-button.hidden {
+    opacity: 0;
+    transform: translateY(-15px);
+    pointer-events: none;
+}
+
+.menu-container {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 40%;
+    height: 100vh;
+    background: linear-gradient(135deg, #3b75ef 0%, #2c5bd9 100%);
+    backdrop-filter: blur(20px);
+    transition: all 0.9s cubic-bezier(0.77, 0, 0.175, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 40px;
+    box-shadow: 5px 0 40px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.menu-container.open {
+    left: 0;
+    animation: menuReveal 0.9s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+}
+
+@keyframes menuReveal {
+    0% {
+        clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+        box-shadow: none;
+    }
+    100% {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        box-shadow: 5px 0 40px rgba(0, 0, 0, 0.3);
+    }
+}
+
+.menu-content {
+    opacity: 0;
+    transform: translateY(-30px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1000;
+}
+
+.menu-container.open .menu-content {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.5s;
+}
+
+.close-button {
+    position: absolute;
+    top: 33px;
+    right: 50px;
+    font-size: 30px;
+    color: #ffffff;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 1001;
+    padding: 10px;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 0;
+    transform: rotate(0deg) scale(0.8);
+    overflow: hidden;
+    letter-spacing: 1px;
+    font-weight: 600;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+.menu-container.open .close-button {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+    animation: fadeRotateIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+}
+
+@keyframes fadeRotateIn {
+    0% {
+        opacity: 0;
+        transform: rotate(-90deg) scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: rotate(0deg) scale(1);
+    }
+}
+
+.close-button:hover {
+    color: #ffffff;
+    transform: translateY(-3px) scale(1.05);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+}
+
+.close-button::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #ffffff;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.close-button:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.9);
+}
+/* Content Styles */
+.content {
+  text-align: center;
+  margin-top: 160px;
+}
+
+.content p {
+  font-size: 2.7em;
+  margin-top: 0;
+  font-weight: 900;
+  text-align: center;
+  overflow: hidden;
+  border-right: 0.15em solid #000; /* The cursor */
+  white-space: nowrap;
+  margin: 0 auto;
+  letter-spacing: 0.02em;
+  animation: 
+    typing 3.5s steps(40, end),
+    blink-caret 0.75s step-end infinite,
+    fadeIn 1s ease forwards;
+}
+
+/* Typing effect */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: #ffffff }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.content h2 {
+  font-size: 20px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  margin-left: 50px;
+  text-align: left;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #1a1a1a;
+  position: relative;
+  padding-top: 20px;
+  letter-spacing: -0.3px;
+}
+
+/* Split line styling with refined animations */
+.content h2 .line {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  transform: translateY(0); /* Reset default position */
+  opacity: 1; /* Start visible by default for non-JS environments */
+}
+
+/* Animated entrance for first load - will play once */
+.content h2 .line:first-child {
+  font-weight: 600;
+  animation: fadeSlideUp 0.7s both;
+}
+
+.content h2 .line:last-child {
+  font-weight: 700;
+  color: #4361ee;
+  animation: fadeSlideUp 0.7s 0.2s both; /* Delayed animation */
+}
+
+/* Hover effect for the underline */
+.content h2::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #4361ee;
+  transition: width 0.4s ease-out;
+}
+
+.content:hover h2::after {
+  width: 60px;
+}
+
+/* Fix animations with better keyframes */
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hover animation for text */
+.content h2 .line {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.content:hover h2 .line:first-child {
+  transform: translateX(3px);
+  color: #333;
+}
+
+.content:hover h2 .line:last-child {
+  transform: translateX(3px);
+  color: #3a0ca3;
+}
+
+/* Add subtle pulse indicator on hover */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(67, 97, 238, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(67, 97, 238, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(67, 97, 238, 0);
+  }
+}
+
+.content::before {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4361ee;
+  left: 35px;
+  top: 60px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.content:hover::before {
+  opacity: 1;
+  animation: pulse 1.5s infinite;
+}
+
+/* Zipserve Title */
+/* Ultra premium gradient animation for the zipserve title */
+.zipserve-title {
+  position: relative;
+  display: inline-block;
+  font-size: 2em;
+  background: linear-gradient(
+    90deg, 
+    #1a1a1a 0%,
+    #2c4da3 25%,
+    #3b75ef 50%,
+    #2c4da3 75%,
+    #1a1a1a 100%
+  );
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: ultraGradientFlow 6s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  text-shadow: 0 5px 15px rgba(59, 117, 239, 0.2);
+  letter-spacing: 0.5px;
+  transform-origin: center;
+  transform: perspective(1000px) rotateX(0deg);
+  transition: transform 0.5s ease;
+}
+
+/* 3D hover effect for title */
+.zipserve-title:hover {
+  transform: perspective(1000px) rotateX(5deg);
+  animation-play-state: paused;
+  letter-spacing: 1px;
+}
+
+/* Enhanced animated dots with orbit effect */
+.zipserve-title::before,
+.zipserve-title::after {
+  content: '•';
+  font-size: 1.2em;
+  position: absolute;
+  top: 50%;
+  color: #3b75ef;
+  filter: drop-shadow(0 0 5px rgba(59, 117, 239, 0.5));
+  opacity: 0;
+  animation: orbitDots 3s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
+.zipserve-title::before {
+  left: -25px;
+  animation-delay: 0.2s;
+  transform: translateY(-50%) scale(0);
+}
+
+.zipserve-title::after {
+  right: -25px;
+  animation-delay: 1.5s;
+  transform: translateY(-50%) scale(0);
+}
+
+/* Premium Animation Keyframes */
+@keyframes ultraGradientFlow {
+  0% { 
+    background-position: 0% center;
+    text-shadow: 0 5px 15px rgba(59, 117, 239, 0.2);
+  }
+  50% { 
+    background-position: 100% center; 
+    text-shadow: 0 5px 15px rgba(59, 117, 239, 0.5);
+  }
+  100% { 
+    background-position: 0% center;
+    text-shadow: 0 5px 15px rgba(59, 117, 239, 0.2);
+  }
+}
+
+@keyframes orbitDots {
+  0% {
+    transform: translateY(-50%) scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  20% {
+    transform: translateY(-50%) scale(1.2) rotate(30deg);
+    opacity: 1;
+  }
+  40% {
+    transform: translateY(-50%) scale(1) rotate(0deg);
+    opacity: 0.8;
+  }
+  60% {
+    transform: translateY(-50%) scale(1.1) rotate(-30deg);
+    opacity: 1;
+  }
+  80% {
+    transform: translateY(-50%) scale(0.9) rotate(0deg);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(-50%) scale(0) rotate(30deg);
+    opacity: 0;
+  }
+}
+
+/* Add particle effect on hover */
+.zipserve-title::after:hover,
+.zipserve-title::before:hover {
+  animation-play-state: paused;
+}
+
+/* Premium versions of original animations */
+@keyframes advancedFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+    filter: blur(5px);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-5px) scale(1.02);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes premiumSlideFromLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-40px) skew(10deg);
+    filter: brightness(1.2);
+  }
+  70% {
+    opacity: 1;
+    transform: translateX(5px) skew(0deg);
+    filter: brightness(1);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) skew(0deg);
+    filter: brightness(1);
+  }
+}
+
+/* Responsive adjustments with enhanced animations */
+@media (max-width: 768px) {
+  .content p {
+    font-size: 2em;
+  }
+  
+  .zipserve-title {
+    font-size: 1.5em;
+    animation: compactGradientFlow 4s ease infinite;
+  }
+  
+  @keyframes compactGradientFlow {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+  }
+  
+  .zipserve-title::before,
+  .zipserve-title::after {
+    animation: simpleBlink 1.5s ease-in-out infinite alternate;
+  }
+  
+  @keyframes simpleBlink {
+    from { opacity: 0.3; transform: translateY(-50%) scale(0.8); }
+    to { opacity: 1; transform: translateY(-50%) scale(1); }
+  }
+}
+
+/* Menu Email */
+
+.menu-email {
+  position: absolute;
+  left: 50%;
+  bottom: 350px;
+  transform: translateX(-50%);
+  font-size: 20px;
+  color: #1a1a1a;
+  cursor: pointer;
+  z-index: 10;
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+.menu-email::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: #3b75ef;
+  transform: scaleX(0);
+  transform-origin: bottom left;
+  transition: transform 0.3s ease-in-out;
+}
+
+.menu-email:hover::after {
+  transform: scaleX(1);
+}
+
+.menu-email:hover {
+  color: #3b75ef;
+}
+
+/* Contact Button */
+.contact-button {
+  background-color: transparent;
+  border: 0.125rem solid #1a1a1a;
+  border-radius: 0.5rem;
+  padding: 0.625rem 1.875rem 0.625rem 1.25rem;
+  font-size: 20px;
+  color: #1a1a1a;
+  position: absolute;
+  top: 26rem;
+  left: 92rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.contact-button::after {
+  content: "\2192";
+  font-size: 1.125rem;
+  transition: transform 0.3s ease-in-out;
+}
+
+.contact-button:hover {
+  background-color: #3b75ef;
+  color: #ffffff;
+  border-color: #3b75ef;
+}
+
+.contact-button:hover::after {
+  transform: translateX(0.3125rem);
+}
+
+.contact-button:active {
+  background-color: #2a5bd7;
+  border-color: #2a5bd7;
+  transform: translateY(0.0625rem);
+}
+
+.contact-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.1875rem rgba(59, 117, 239, 0.3);
+}
+
+/* Arrows */
+.arrows span {
+  cursor: pointer;
+  font-family: "Bigilla", sans-serif;
+  font-size: 1.1rem;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  background: #000;
+  border-radius: 50px;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  position: relative;
+  right: -1150px;
+  top: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrows span:hover {
+  transform: translateX(8px);
+  background: #1a1a1a;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  border-color: #ccc;
+}
+
+.scroll-float {
+  overflow: hidden;
+}
+
+.scroll-float-text {
+  display: inline-block;
+  font-size: clamp(1.6rem, 8vw, 10rem);
+  font-weight: 900;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.char {
+  display: inline-block;
+}
+
+
+/* {magnetic effect} */
+
